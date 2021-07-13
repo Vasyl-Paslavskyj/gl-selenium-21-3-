@@ -11,9 +11,8 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import java.util.List;
 
 public class ShoppingCartPage extends Page{
-//    @FindBy(xpath = "//*[@id='box-checkout-cart']/h2")
-//    private WebElement shoppingCart;
-    By shoppingCart = By.xpath("//*[@id='box-checkout-cart']/h2");
+    @FindBy(xpath = "//*[@id='box-checkout-cart']/h2")
+    private WebElement shoppingCart;
 
     @FindBy(xpath = "//*[@id='box-checkout-cart']//button[@name='remove_cart_item']")
     private List<WebElement> removeCarts;
@@ -21,7 +20,9 @@ public class ShoppingCartPage extends Page{
     @FindBy(xpath = "//*[@id='box-checkout-cart']//button[@name='remove_cart_item']")
     private WebElement removeCart;
 
-    By noItemsTxt = By.xpath("//*[text()='There are no items in your cart.']");
+    @FindBy(xpath = "//*[text()='There are no items in your cart.']")
+    private WebElement noItemsTxt;
+
     By cartItemsTable = By.cssSelector(".items.list-unstyled");
     By back = By.xpath("//*[text()='Back']");
 
@@ -31,7 +32,7 @@ public class ShoppingCartPage extends Page{
     }
 
     public ShoppingCartPage removeDucks() {
-        wait.until(ExpectedConditions.textToBePresentInElementLocated(shoppingCart, "Shopping Cart"));
+        wait.until(ExpectedConditions.textToBePresentInElement(shoppingCart, "Shopping Cart"));
         int size = removeCarts.size();
         for (int item = 0; item < size; item++) {
             new Actions(driver).moveToElement(wait.until(ExpectedConditions.elementToBeClickable(removeCart)))
@@ -40,7 +41,7 @@ public class ShoppingCartPage extends Page{
                 wait.until(ExpectedConditions.presenceOfElementLocated(cartItemsTable));
             }
         }
-        wait.until(ExpectedConditions.visibilityOfElementLocated(noItemsTxt));
+        wait.until(ExpectedConditions.visibilityOf(noItemsTxt));
         return this;
     }
 

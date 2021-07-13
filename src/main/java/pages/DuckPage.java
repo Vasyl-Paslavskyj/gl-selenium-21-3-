@@ -12,9 +12,8 @@ public class DuckPage extends Page{
     @FindBy(xpath = "//button[@name='add_cart_product']")
     private WebElement addToCart;
 
-//    @FindBy(xpath = "//*[contains(@class,'badge') and contains(@class,'quantity')]")
-//    private WebElement countLabel;
-    By countLabel = By.xpath("//*[contains(@class,'badge') and contains(@class,'quantity')]");
+    @FindBy(xpath = "//*[contains(@class,'badge') and contains(@class,'quantity')]")
+    private WebElement countLabel;
 
     public DuckPage(ApplicationContext appContext) {
         super(appContext);
@@ -24,7 +23,7 @@ public class DuckPage extends Page{
     public DuckPage addDuck(int i) {
         new Actions(driver).moveToElement(wait.until(ExpectedConditions.elementToBeClickable(addToCart)))
                 .pause(500).click().perform();
-        wait.until(ExpectedConditions.textToBePresentInElementLocated(countLabel, String.valueOf(i)));
+        wait.until(ExpectedConditions.textToBePresentInElement(countLabel, String.valueOf(i)));
         return this;
     }
 
